@@ -4,9 +4,9 @@ import Footer from './footer';
 
 const Layout = (props: { children: React.ReactNode }) => {
   return (
-    <div className='relative w-[1920px]'>
+    <div>
       <Header />
-      <main className='h-[2518px] w-[1920px] bg-[#ffffff]'>{props.children}</main>
+      <main className='w-[1920px] bg-[#ffffff]'>{props.children}</main>
       <Footer />
     </div>
   );
