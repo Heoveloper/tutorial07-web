@@ -10,7 +10,7 @@ const HomePage = () => {
       />
       <div className='mb-[108px] flex flex-col items-center justify-center'>
         <div className='mb-[20px] flex w-[1200px] items-start'>
-          <h2 className=' font-Roboto h-[33px] w-[104px] text-[28px] font-semibold leading-[32.81px] text-[#323232]'>
+          <h2 className='h-[33px] w-[104px] font-[Roboto] text-[28px] font-semibold leading-[32.81px] text-[#323232]'>
             공동구매
           </h2>
         </div>
