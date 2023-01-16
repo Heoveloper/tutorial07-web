@@ -1,10 +1,52 @@
+import { gql, useMutation } from '@apollo/client';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout';
-import { Link } from 'react-router-dom';
+
+const SignInAdminByEveryone = gql`
+  mutation SignInAdminByEveryone($loginId: String!, $password: String!) {
+    signInAdminByEveryone(id: $loginId, password: $password) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
 
 const LoginPage = () => {
+  const switchingPage = useNavigate();
+  function goHome() {
+    switchingPage('/');
+  }
+
+  const [signInLoading, setSigninLoading] = useState(false);
+  const [loginId, setLoginId] = useState('');
+  const [password, setPassword] = useState('');
+  const [signinAdmin] = useMutation(SignInAdminByEveryone);
+
+  const onSignin = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (signInLoading) return;
+
+    setSigninLoading(true);
+    signinAdmin({
+      variables: { loginId, password },
+    })
+      .then(response => {
+        window.localStorage.setItem('id', loginId);
+        window.localStorage.setItem('pw', password);
+        console.log(response);
+        goHome();
+      })
+      .catch(error => {
+        console.log('에러발생');
+        console.log(error);
+      });
+  };
+
   return (
     <Layout>
-      <div className='flex flex-col items-center bg-[#fafafa] p-[106px]'>
+      <form onSubmit={onSignin} className='flex flex-col items-center bg-[#fafafa] p-[106px]'>
         <h2 className='mb-[62px] font-[Roboto] text-[40px] font-semibold leading-[47px] text-[#323232]'>
           로그인
         </h2>
@@ -20,6 +62,8 @@ const LoginPage = () => {
                 placeholder:text-[#bbbbbb] focus:border-[3px] focus:border-[#00c7ae] focus:border-opacity-[0.22]'
                 type='text'
                 placeholder='아이디를 입력하세요'
+                name='loginId'
+                onChange={e => setLoginId(e.target.value)}
               />
             </div>
             <div>
@@ -32,10 +76,12 @@ const LoginPage = () => {
                 placeholder:text-[#bbbbbb] focus:border-[3px] focus:border-[#00c7ae] focus:border-opacity-[0.22]'
                 type='password'
                 placeholder='비밀번호를 입력하세요'
+                name='password'
+                onChange={e => setPassword(e.target.value)}
               />
             </div>
             <div className='flex h-[148px] flex-col justify-between'>
-              <button className='h-[48px] w-[344px] rounded bg-[#00c7ae]'>
+              <button type='submit' className='h-[48px] w-[344px] rounded bg-[#00c7ae]'>
                 <p className='text-center font-[Roboto] text-[16px] font-medium leading-[28.43px] text-[#ffffff]'>
                   로그인
                 </p>
@@ -53,7 +99,7 @@ const LoginPage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </form>
     </Layout>
   );
 };
