@@ -1,3 +1,4 @@
+import ProductCard from 'src/components/product-card';
 import Layout from '../components/layout';
 
 const HomePage = () => {
@@ -16,14 +17,17 @@ const HomePage = () => {
         </div>
         <div className='mx-auto grid w-[1200px] grid-cols-4 gap-x-[20px] gap-y-[28px]'>
           {Array.from({ length: 16 }, (_, i) => (
-            <img key={i} className='h-[285px] w-[285px]' />
+            <ProductCard key={i} />
           ))}
-          {/* {Array.from({ length: 16 }, (_, i) => (
+        </div>
+        {/* {Array.from({ length: 16 }, (_, i) => (
+            <img key={i} className='h-[285px] w-[285px]' />
+          ))} */}
+        {/* {Array.from({ length: 16 }, (_, i) => (
             <div key={i} className='bg-red-400'>
               {i + 1}
             </div>
           ))} */}
-        </div>
       </div>
     </Layout>
   );
