@@ -1,8 +1,19 @@
 import { gql, useMutation } from '@apollo/client';
-import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout';
+import { useForm } from 'react-hook-form';
 
+// TODO 회원 로그인
+const SignInUserByEveryone = gql`
+  mutation SignInUserByEveryone($loginId: String!, $password: String!) {
+    signInUserByEveryone(loginId: $loginId, password: $password) {
+      accessToken
+      refreshToken
+    }
+  }
+`;
+
+// TODO 관리자 로그인
 const SignInAdminByEveryone = gql`
   mutation SignInAdminByEveryone($loginId: String!, $password: String!) {
     signInAdminByEveryone(id: $loginId, password: $password) {
@@ -14,39 +25,51 @@ const SignInAdminByEveryone = gql`
 
 const LoginPage = () => {
   const switchingPage = useNavigate();
-  function goHome() {
-    switchingPage('/');
-  }
 
-  const [signInLoading, setSigninLoading] = useState(false);
-  const [loginId, setLoginId] = useState('');
-  const [password, setPassword] = useState('');
-  const [signinAdmin] = useMutation(SignInAdminByEveryone);
+  const [signInUser] = useMutation(SignInUserByEveryone);
+  const [signInAdmin] = useMutation(SignInAdminByEveryone);
+  const { register, handleSubmit } = useForm();
+  // { defaultValues: { loginId: '', password: '' } }
 
-  const onSignin = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSignInUser = (data: any) => {
+    console.log(data);
 
-    if (signInLoading) return;
-
-    setSigninLoading(true);
-    signinAdmin({
-      variables: { loginId, password },
-    })
-      .then(response => {
-        window.localStorage.setItem('id', loginId);
-        window.localStorage.setItem('pw', password);
-        console.log(response);
-        goHome();
+    signInUser({ variables: data })
+      .then(res => {
+        console.log(res);
+        window.localStorage.setItem('accessToken', res.data.signInUserByEveryone.accessToken);
+        window.localStorage.setItem('refreshToken', res.data.signInUserByEveryone.refreshToken);
+        window.localStorage.setItem('type', 'user');
+        alert('로그인에 성공하였습니다!');
+        console.log(window.localStorage.getItem('accessToken'));
+        console.log(window.localStorage.getItem('refreshToken'));
+        switchingPage('/');
       })
-      .catch(error => {
-        console.log('에러발생');
-        console.log(error);
-      });
+      .catch(err => console.log(err));
+  };
+
+  const onSignInAdmin = (data: any) => {
+    console.log(data);
+
+    signInAdmin({ variables: data })
+      .then(res => {
+        console.log(res);
+        window.localStorage.setItem('accessToken', res.data.signInAdminByEveryone.accessToken);
+        window.localStorage.setItem('refreshToken', res.data.signInAdminByEveryone.refreshToken);
+        window.localStorage.setItem('type', 'admin');
+        alert('관리자로 로그인하였습니다.');
+        console.log(window.localStorage.getItem('type'));
+        switchingPage('/');
+      })
+      .catch(err => console.log(err));
   };
 
   return (
     <Layout>
-      <form onSubmit={onSignin} className='flex flex-col items-center bg-[#fafafa] p-[106px]'>
+      <form
+        onSubmit={handleSubmit(onSignInUser)}
+        className='flex flex-col items-center bg-[#fafafa] p-[106px]'
+      >
         <h2 className='mb-[62px] font-[Roboto] text-[40px] font-semibold leading-[47px] text-[#323232]'>
           로그인
         </h2>
@@ -62,8 +85,9 @@ const LoginPage = () => {
                 placeholder:text-[#bbbbbb] focus:border-[3px] focus:border-[#00c7ae] focus:border-opacity-[0.22]'
                 type='text'
                 placeholder='아이디를 입력하세요'
-                name='loginId'
-                onChange={e => setLoginId(e.target.value)}
+                {...register('loginId', { required: true })}
+                // name='loginId'
+                // onChange={e => setLoginId(e.target.value)}
               />
             </div>
             <div>
@@ -76,8 +100,9 @@ const LoginPage = () => {
                 placeholder:text-[#bbbbbb] focus:border-[3px] focus:border-[#00c7ae] focus:border-opacity-[0.22]'
                 type='password'
                 placeholder='비밀번호를 입력하세요'
-                name='password'
-                onChange={e => setPassword(e.target.value)}
+                {...register('password', { required: true })}
+                // name='password'
+                // onChange={e => setPassword(e.target.value)}
               />
             </div>
             <div className='flex h-[148px] flex-col justify-between'>
@@ -86,7 +111,11 @@ const LoginPage = () => {
                   로그인
                 </p>
               </button>
-              <button className='h-[48px] w-[344px] rounded bg-[#4f4f4f]'>
+              <button
+                type='button'
+                onClick={handleSubmit(onSignInAdmin)}
+                className='h-[48px] w-[344px] rounded bg-[#4f4f4f]'
+              >
                 <p className='text-center font-[Roboto] text-[16px] font-medium leading-[28.43px] text-[#ffffff]'>
                   관리자로 로그인
                 </p>
