@@ -1,7 +1,27 @@
+import { gql, useQuery } from '@apollo/client';
 import ProductCard from 'src/components/product-card';
 import Layout from '../components/layout';
 
 const HomePage = () => {
+  const SelectGroupPurchaseListsByEveryone = gql`
+    query SelectGroupPurchaseListsByEveryone {
+      selectGroupPurchaseListsByEveryone {
+        id
+        name
+        description
+        startAt
+        endAt
+        createdAt
+        image {
+          original
+        }
+      }
+    }
+  `;
+
+  const { data } = useQuery(SelectGroupPurchaseListsByEveryone);
+  const lists = data ? data.selectGroupPurchaseListsByEveryone : [];
+
   return (
     <Layout>
       <img
@@ -16,10 +36,19 @@ const HomePage = () => {
           </h2>
         </div>
         <div className='mx-auto grid w-[1200px] grid-cols-4 gap-x-[20px] gap-y-[28px]'>
-          {Array.from({ length: 16 }, (_, i) => (
-            <ProductCard key={i} />
+          {lists.map(v => (
+            <ProductCard
+              image={v.image.original}
+              key={v.id}
+              endAt={v.endAt}
+              name={v.name}
+              startAt={v.startAt}
+            />
           ))}
         </div>
+        {/* {Array.from({ length: 16 }, (_, i) => (
+            <ProductCard key={i} />
+          ))} */}
         {/* {Array.from({ length: 16 }, (_, i) => (
             <img key={i} className='h-[285px] w-[285px]' />
           ))} */}
