@@ -7,12 +7,12 @@ const Footer = () => {
         <div className='flex h-[197px] w-[667px] flex-col justify-center'>
           <img src='/logo.png' className='h-[43px] w-[131px]' />
           <div className='mt-[24px] flex w-[237px] justify-between'>
-            <Link to='/개인정보처리방침'>
+            <Link to='/privacy-policy'>
               <p className='font-[Roboto] text-[16px] font-semibold leading-[19px] text-[#e1e1e1]'>
                 개인정보처리방침
               </p>
             </Link>
-            <Link to='/이용약관'>
+            <Link to='/terms-of-use'>
               <p className='font-[Roboto] text-[16px] font-semibold leading-[19px] text-[#e1e1e1]'>
                 이용약관
               </p>

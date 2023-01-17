@@ -86,7 +86,13 @@ module.exports = {
         array: false,
       },
     ],
-    'prettier/prettier': WARN,
+    'prettier/prettier': [
+      WARN,
+      // 'error',
+      // {
+      //   endOfLine: 'auto',
+      // },
+    ],
     /** @link https://github.com/jsx-eslint/eslint-plugin-react/blob/HEAD/docs/rules/jsx-curly-brace-presence.md */
     'react/jsx-curly-brace-presence': [WARN, { props: 'never', children: 'never' }],
     /** @link https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/self-closing-comp.md */
@@ -95,7 +101,7 @@ module.exports = {
     'react/react-in-jsx-scope': OFF,
     /** @link https://eslint.org/docs/latest/rules/spaced-comment */
     'spaced-comment': [
-      WARN,
+      // WARN,
       'always',
       {
         markers: ['/'],
