@@ -10,11 +10,25 @@ const ProductDetailPage = () => {
             상품명 예시입니다
           </h1>
           <div className='flex h-[450px] w-[550px] flex-col justify-evenly border-y-[1px] border-solid border-[#bbbbbb]'>
-            <div className='w-[199px]'>
-              <div className='h-[47px] w-[77px]'>
-                <div>시작일</div>
-                <div>-</div>
-                <div>마감일</div>
+            <div className='flex w-[199px] items-center justify-between'>
+              <div className='flex h-[47px] flex-col'>
+                <p className='font-[Roboto] text-[10px] font-semibold leading-[11.72px] text-[#bbbbbb]'>
+                  시작일
+                </p>
+                <p className='font-[Roboto] text-[30px] font-medium leading-[35.16px] text-[#00c7ae]'>
+                  08.19
+                </p>
+              </div>
+              <p className='font-[Roboto] text-[30px] font-semibold leading-[35.16px] text-[#00c7ae]'>
+                -
+              </p>
+              <div>
+                <p className='font-[Roboto] text-[10px] font-semibold leading-[11.72px] text-[#bbbbbb]'>
+                  마감일
+                </p>
+                <p className='font-[Roboto] text-[30px] font-medium leading-[35.16px] text-[#00c7ae]'>
+                  08.25
+                </p>
               </div>
             </div>
             <div className='border-[1px] border-solid border-[#e1e1e1]' />
