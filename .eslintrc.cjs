@@ -101,8 +101,7 @@ module.exports = {
     'react/react-in-jsx-scope': OFF,
     /** @link https://eslint.org/docs/latest/rules/spaced-comment */
     'spaced-comment': [
-      // WARN,
-      'always',
+      WARN,
       {
         markers: ['/'],
       },

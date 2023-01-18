@@ -1,6 +1,8 @@
 import { ApolloProvider } from '@apollo/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { id } from 'date-fns/locale';
+import { createBrowserRouter, RouterProvider, useParams } from 'react-router-dom';
 import client from './api/client';
+import ProductCard from './components/product-card';
 import HomePage from './pages';
 import AdminPage from './pages/admin';
 import GroupPurchasePage from './pages/group-purchase';
@@ -17,7 +19,7 @@ const router = createBrowserRouter([
     path: '/',
     children: [
       { index: true, element: <HomePage /> },
-      { path: 'detail', element: <ProductDetailPage /> },
+      { path: 'detail/:id', element: <ProductDetailPage /> },
       { path: 'group-purchase', element: <GroupPurchasePage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'sign-up', element: <SignUpPage /> },

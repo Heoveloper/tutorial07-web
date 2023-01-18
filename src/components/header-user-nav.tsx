@@ -1,11 +1,16 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 const HeaderUserNav = () => {
-  const switchingPage = useNavigate();
+  const navigate = useNavigate();
 
-  const onLogout = () => {
+  const curPage = useLocation();
+  const onLogOut = () => {
     window.localStorage.clear();
-    switchingPage('/');
+    if (curPage.pathname != '/') {
+      navigate('/');
+    } else {
+      navigate(-1);
+    }
   };
 
   return (
@@ -18,7 +23,7 @@ const HeaderUserNav = () => {
       </Link>
       <button
         className='font-[Roboto] text-[16px] font-medium leading-[18.75px] text-[#323232]'
-        onClick={onLogout}
+        onClick={onLogOut}
       >
         로그아웃
       </button>

@@ -11,7 +11,6 @@ const GroupPurchasePage = () => {
         description
         startAt
         endAt
-        createdAt
         image {
           original
         }
@@ -33,11 +32,12 @@ const GroupPurchasePage = () => {
         <div className='mx-auto grid w-[1200px] grid-cols-4 gap-x-[20px] gap-y-[28px]'>
           {lists.map(v => (
             <ProductCard
-              image={v.image.original}
               key={v.id}
-              endAt={v.endAt}
+              id={v.id}
               name={v.name}
               startAt={v.startAt}
+              endAt={v.endAt}
+              image={v.image.original}
             />
           ))}
 

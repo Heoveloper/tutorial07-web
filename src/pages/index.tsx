@@ -38,17 +38,15 @@ const HomePage = () => {
         <div className='mx-auto grid w-[1200px] grid-cols-4 gap-x-[20px] gap-y-[28px]'>
           {lists.map(v => (
             <ProductCard
-              image={v.image.original}
               key={v.id}
-              endAt={v.endAt}
+              id={v.id}
               name={v.name}
               startAt={v.startAt}
+              endAt={v.endAt}
+              image={v.image.original}
             />
           ))}
         </div>
-        {/* {Array.from({ length: 16 }, (_, i) => (
-            <ProductCard key={i} />
-          ))} */}
         {/* {Array.from({ length: 16 }, (_, i) => (
             <img key={i} className='h-[285px] w-[285px]' />
           ))} */}

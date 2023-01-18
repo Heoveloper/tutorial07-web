@@ -1,8 +1,8 @@
-import { Link } from 'react-router-dom';
 import { format, parseISO } from 'date-fns';
+import { Link } from 'react-router-dom';
 
 type ProductProps = {
-  // id: number;
+  id: number;
   name: string;
   // description: string;
   startAt: string;
@@ -11,9 +11,9 @@ type ProductProps = {
   image: string;
 };
 
-const ProductCard = ({ endAt, name, startAt, image }: ProductProps) => {
+const ProductCard = ({ id, name, startAt, endAt, image }: ProductProps) => {
   return (
-    <Link to='/detail'>
+    <Link to={`/detail/${id}`} key={id}>
       <div className='h-[358x] w-[285px]'>
         <img src={image} className='h-[285px] w-[285px]' />
         <h4 className='mt-[14px] font-[Roboto] text-[18px] font-semibold leading-[31.98px] text-[#323232]'>

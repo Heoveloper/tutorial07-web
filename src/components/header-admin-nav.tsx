@@ -1,11 +1,16 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const HeaderAdminNav = () => {
-  const switchingPage = useNavigate();
+  const navigate = useNavigate();
 
+  const curPage = useLocation();
   const onLogout = () => {
     window.localStorage.clear();
-    switchingPage('/');
+    if (curPage.pathname != '/') {
+      navigate('/');
+    } else {
+      navigate(-1);
+    }
   };
 
   return (
