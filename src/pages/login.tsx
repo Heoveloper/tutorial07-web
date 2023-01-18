@@ -2,6 +2,12 @@ import { gql, useMutation } from '@apollo/client';
 import { Link, useNavigate } from 'react-router-dom';
 import Layout from '../components/layout';
 import { useForm } from 'react-hook-form';
+import { ErrorMessage } from '@hookform/error-message';
+
+type FormType = {
+  loginId: string;
+  password: string;
+};
 
 // TODO 회원 로그인
 const SignInUserByEveryone = gql`
@@ -28,10 +34,14 @@ const LoginPage = () => {
 
   const [signInUser] = useMutation(SignInUserByEveryone);
   const [signInAdmin] = useMutation(SignInAdminByEveryone);
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormType>();
   // { defaultValues: { loginId: '', password: '' } }
 
-  const onSignInUser = (data: any) => {
+  const onSignInUser = (data: FormType) => {
     console.log(data);
 
     signInUser({ variables: data })
@@ -48,7 +58,7 @@ const LoginPage = () => {
       .catch(err => console.log(err));
   };
 
-  const onSignInAdmin = (data: any) => {
+  const onSignInAdmin = (data: FormType) => {
     console.log(data);
 
     signInAdmin({ variables: data })
@@ -85,10 +95,16 @@ const LoginPage = () => {
                 placeholder:text-[#bbbbbb] focus:border-[3px] focus:border-[#00c7ae] focus:border-opacity-[0.22]'
                 type='text'
                 placeholder='아이디를 입력하세요'
-                {...register('loginId', { required: true })}
-                // name='loginId'
-                // onChange={e => setLoginId(e.target.value)}
+                {...register('loginId', {
+                  required: { value: true, message: '아이디를 입력하세요.' },
+                  // minLength: { value: 8, message: '아이디는 8자 이상입니다' },
+                })}
               />
+              {errors['loginId'] && (
+                <div className='mt-1 text-left font-sans text-sm text-[#ff3131]'>
+                  {errors['loginId'].message}
+                </div>
+              )}
             </div>
             <div>
               <h3 className='mb-[6px] self-start font-[Roboto] text-[16px] font-semibold leading-[28.43px] text-[#323232]'>
@@ -100,10 +116,15 @@ const LoginPage = () => {
                 placeholder:text-[#bbbbbb] focus:border-[3px] focus:border-[#00c7ae] focus:border-opacity-[0.22]'
                 type='password'
                 placeholder='비밀번호를 입력하세요'
-                {...register('password', { required: true })}
-                // name='password'
-                // onChange={e => setPassword(e.target.value)}
+                {...register('password', {
+                  required: { value: true, message: '비밀번호를 입력하세요.' },
+                })}
               />
+              {errors.password && (
+                <div className='mt-1 text-left font-sans text-sm text-[#ff3131]'>
+                  {errors.password.message}
+                </div>
+              )}
             </div>
             <div className='flex h-[148px] flex-col justify-between'>
               <button type='submit' className='h-[48px] w-[344px] rounded bg-[#00c7ae]'>
