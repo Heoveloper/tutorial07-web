@@ -101,7 +101,7 @@ const CreateProduct = () => {
         </div>
         <button
           type='submit'
-          className='h-[50px] w-[100px] self-end rounded-md bg-slate-600 font-bold text-white'
+          className='h-[50px] w-[100px] self-end rounded-md bg-slate-600 font-bold text-white hover:opacity-80'
         >
           생성
         </button>
