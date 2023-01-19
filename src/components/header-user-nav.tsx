@@ -9,7 +9,7 @@ const HeaderUserNav = () => {
     if (curPage.pathname != '/') {
       navigate('/');
     } else {
-      navigate(-1);
+      navigate('/login');
     }
   };
 

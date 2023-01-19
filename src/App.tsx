@@ -10,6 +10,7 @@ import LoginPage from './pages/login';
 import MyPage from './pages/my-page';
 import PrivacyPolicyPage from './pages/privacy-policy';
 import ProductDetailPage from './pages/product-detail';
+import ProductDetailAdminPage from './pages/product-detail-admin';
 import SignUpPage from './pages/sign-up';
 import TermsOfUsePage from './pages/terms-of-use';
 // import Login from './pages/test';
@@ -20,6 +21,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'detail/:id', element: <ProductDetailPage /> },
+      { path: 'detail/:id/admin', element: <ProductDetailAdminPage /> },
       { path: 'group-purchase', element: <GroupPurchasePage /> },
       { path: 'login', element: <LoginPage /> },
       { path: 'sign-up', element: <SignUpPage /> },
