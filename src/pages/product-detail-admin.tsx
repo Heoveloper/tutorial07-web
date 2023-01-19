@@ -1,9 +1,9 @@
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { format, parseISO } from 'date-fns';
 import { useParams } from 'react-router-dom';
 import Layout from 'src/components/layout';
 
-const ProductDetailPage = () => {
+const ProductDetailAdminPage = () => {
   const { id } = useParams();
   const groupPurchaseListId = Number(id);
 
@@ -26,14 +26,6 @@ const ProductDetailPage = () => {
   });
   const list = data?.selectGroupPurchaseListByEveryone;
   console.log(list);
-
-  const ApplyGroupPurchaseByUser = gql`
-    mutation ApplyGroupPurchaseByUser($groupPurchaseId: Int!) {
-      applyGroupPurchaseByUser(groupPurchaseId: $groupPurchaseId)
-    }
-  `;
-
-  const [applyByUser] = useMutation(ApplyGroupPurchaseByUser);
 
   return (
     <Layout>
@@ -81,4 +73,4 @@ const ProductDetailPage = () => {
   );
 };
 
-export default ProductDetailPage;
+export default ProductDetailAdminPage;
