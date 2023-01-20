@@ -110,6 +110,11 @@ const LoginPage = () => {
                 비밀번호
               </h3>
               <input
+                onKeyUp={e => {
+                  if (e.key == 'Enter') {
+                    handleSubmit(onSignInUser);
+                  }
+                }}
                 className='border-gray-bright box-border h-[48px] w-[344px] rounded border-[1px] border-solid
                 pl-[14px] font-[Roboto] text-[16px] font-medium leading-[18.75px] text-[#323232] outline-none
                 placeholder:text-[#bbbbbb] focus:border-[3px] focus:border-[#00c7ae] focus:border-opacity-[0.22]'

@@ -126,6 +126,11 @@ const SignUpPage = () => {
                   연락처
                 </h3>
                 <input
+                  onKeyUp={e => {
+                    if (e.key == 'Enter') {
+                      handleSubmit(onSignUp);
+                    }
+                  }}
                   className='border-gray-bright h-[48px] w-[344px] rounded border-[1px] border-solid pl-[14px] font-[Roboto] text-[16px] font-medium leading-[18.75px] text-[#323232] outline-none placeholder:text-[#bbbbbb] focus:border-[3px] focus:border-[#00c7ae] focus:border-opacity-[0.22]'
                   type='text'
                   placeholder='010-0000-0000'
