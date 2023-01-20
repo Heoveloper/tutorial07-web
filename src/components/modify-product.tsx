@@ -63,33 +63,18 @@ const ModifyProduct = ({
       .catch(err => console.log(err));
   };
 
-  // const time = (time: string) => {
-  //   const yearMonthDay = time ? format(parseISO(time), 'yyyy. MM. dd ') : '';
-  //   const amPm = Number(format(parseISO(time), 'hh')) < 12 ? '오전 ' : '오후 ';
-  //   const HourMinute = time ? format(parseISO(time), 'hh: mm') : '';
-  //   console.log(Number(format(parseISO(time), 'hh')));
-  //   console.log(format(parseISO(time), 'hh'));
-
-  //   return yearMonthDay + amPm + HourMinute;
-  // };
-
   // TODO 상품 수정 시 보이는 날짜 맞춰주기
-  const formatDate = (date: any) => {
-    const dt = new Date(date);
-    console.log('dt', format(dt, `yyyy. MM. dd. a hh:mm`, { locale: ko }));
-    const newDt = new Date(format(dt, `yyyy-MM-dd hh:mm`, { locale: ko }));
-    console.log(newDt);
-    newDt.setHours(newDt.getHours() + 3);
-    console.log('newnew', newDt);
+  // const formatDate = (date: any) => {
+  //   const dt = new Date(date);
+  //   console.log('dt', format(dt, `yyyy. MM. dd. a hh:mm`, { locale: ko }));
+  //   const newDt = new Date(format(dt, `yyyy-MM-dd hh:mm`, { locale: ko }));
+  //   console.log(newDt);
+  //   newDt.setHours(newDt.getHours() + 3);
+  //   console.log('newnew', newDt);
 
-    const newDate = format(newDt, 'yyyy. MM. dd. a hh:mm', { locale: ko });
-
-    // const newDt = new Date(format(date, `yyyy. MM. dd. a (hh):mm`, { locale: ko }));
-    // console.log(newDt.getHours());
-    // newDt.setHours(newDt.getHours() + 3);
-    //return format(dt, `yyyy. MM. dd. a (hh):mm`, { locale: ko }); // 날짜 포맷
-    return newDate;
-  };
+  //   const newDate = format(newDt, 'yyyy. MM. dd. a hh:mm', { locale: ko });
+  //   return newDate;
+  // };
 
   return (
     <form
@@ -111,10 +96,10 @@ const ModifyProduct = ({
         <div>
           <h3>시작일</h3>
           <input
-            defaultValue={formatDate(endAt)}
-            // defaultValue={
-            //   startAt ? format(parseISO(startAt), `yyyy. MM. dd. a hh:mm`, { locale: ko }) : ''
-            // }
+            // defaultValue={formatDate(startAt)}
+            defaultValue={
+              startAt ? format(parseISO(startAt), `yyyy. MM. dd. a hh:mm`, { locale: ko }) : ''
+            }
             type='text'
             onFocus={e => (e.target.type = 'datetime-local')}
             className='w-[90%] rounded-sm border-[1px] border-black'
@@ -124,10 +109,10 @@ const ModifyProduct = ({
         <div>
           <h3>마감일</h3>
           <input
-            defaultValue={formatDate(endAt)}
-            // defaultValue={
-            //   endAt ? format(parseISO(endAt), `yyyy. MM. dd. a hh:mm`, { locale: ko }) : ''
-            // }
+            // defaultValue={formatDate(endAt)}
+            defaultValue={
+              endAt ? format(parseISO(endAt), `yyyy. MM. dd. a hh:mm`, { locale: ko }) : ''
+            }
             onFocus={e => (e.target.type = 'datetime-local')}
             className='w-[90%] rounded-sm border-[1px] border-black'
             {...register('endAt', { required: '마감일을 입력해주세요.' })}
@@ -143,7 +128,6 @@ const ModifyProduct = ({
             className='cols-[20px] rows-[5px] h-[150px] w-[300px] resize-none rounded-sm border-[1px] border-black'
             {...register('description', { required: '설명을 입력해주세요.' })}
           />
-          {/* <input type='text' className='rounded-sm border-[1px] border-black' /> */}
         </div>
         <button
           type='submit'
