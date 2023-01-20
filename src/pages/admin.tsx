@@ -85,6 +85,7 @@ const AdminPage = () => {
           original
         }
         isApplied
+        state
       }
     }
   `;
@@ -235,7 +236,8 @@ const AdminPage = () => {
                     id={v.id}
                     name={v.name}
                     image={v.image}
-                    isApplied={v.isApplied}
+                    // isApplied={v.isApplied}
+                    state={v.state}
                     onChangeCurRadio={num => onChangeCurRadio(num)}
                   />
                 ))}
@@ -284,7 +286,7 @@ const ProductTHead = () => {
         <th>상품번호</th>
         <th>상품명</th>
         <th>이미지</th>
-        <th>신청여부</th>
+        <th>상태</th>
       </tr>
     </thead>
   );

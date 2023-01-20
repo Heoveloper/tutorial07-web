@@ -3,6 +3,7 @@ import ProductCard from 'src/components/product-card';
 import Layout from '../components/layout';
 
 const GroupPurchasePage = () => {
+  // TODO 공동구매리스트목록(모두)
   const SelectGroupPurchaseListsByEveryone = gql`
     query SelectGroupPurchaseListsByEveryone {
       selectGroupPurchaseListsByEveryone {
@@ -19,7 +20,6 @@ const GroupPurchasePage = () => {
   `;
 
   const { data } = useQuery(SelectGroupPurchaseListsByEveryone);
-  // console.log(data?.selectGroupPurchaseListsByEveryone);
   const lists = data ? data.selectGroupPurchaseListsByEveryone : [];
   console.log(lists);
 
@@ -40,15 +40,14 @@ const GroupPurchasePage = () => {
               image={v.image.original}
             />
           ))}
-
-          {/* {Array.from({ length: 20 }, (_, i) => ( */}
-          {/* <ProductCard
-            name={data.selectGroupPurchaseListsByEveryone[0].name}
-            startAt={data.selectGroupPurchaseListsByEveryone[0].startAt}
-            endAt={data.selectGroupPurchaseListsByEveryone[0].endAt}
-            // key={i}
-          /> */}
-          {/* ))} */}
+          {/* {Array.from({ length: 20 }, (_, i) => (
+            <ProductCard
+              key={i}
+              name={data.selectGroupPurchaseListsByEveryone[0].name}
+              startAt={data.selectGroupPurchaseListsByEveryone[0].startAt}
+              endAt={data.selectGroupPurchaseListsByEveryone[0].endAt}
+            />
+          ))} */}
         </div>
       </div>
     </Layout>
