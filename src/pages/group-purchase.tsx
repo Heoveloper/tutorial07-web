@@ -1,27 +1,11 @@
 import { gql, useQuery } from '@apollo/client';
+import { SelectGroupPurchaseListsByEveryoneDocument } from 'src/api/gql/graphql';
 import ProductCard from 'src/components/product-card';
 import Layout from '../components/layout';
 
 const GroupPurchasePage = () => {
-  // TODO 공동구매리스트목록(모두)
-  const SelectGroupPurchaseListsByEveryone = gql`
-    query SelectGroupPurchaseListsByEveryone {
-      selectGroupPurchaseListsByEveryone {
-        id
-        name
-        description
-        startAt
-        endAt
-        image {
-          original
-        }
-      }
-    }
-  `;
-
-  const { data } = useQuery(SelectGroupPurchaseListsByEveryone);
+  const { data } = useQuery(SelectGroupPurchaseListsByEveryoneDocument);
   const lists = data ? data.selectGroupPurchaseListsByEveryone : [];
-  console.log(lists);
 
   return (
     <Layout>
@@ -31,14 +15,7 @@ const GroupPurchasePage = () => {
         </h2>
         <div className='mx-auto grid w-[1200px] grid-cols-4 gap-x-[20px] gap-y-[28px]'>
           {lists.map(v => (
-            <ProductCard
-              key={v.id}
-              id={v.id}
-              name={v.name}
-              startAt={v.startAt}
-              endAt={v.endAt}
-              image={v.image.original}
-            />
+            <ProductCard key={v.id} item={v} />
           ))}
           {/* {Array.from({ length: 20 }, (_, i) => (
             <ProductCard

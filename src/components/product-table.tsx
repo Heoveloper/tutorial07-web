@@ -46,7 +46,7 @@ const ProductTable = ({ id, name, image, state, onChangeCurRadio }: ProductProps
         <td>{name}</td>
         <td>
           <Link className='flex items-center justify-center' to={`/detail/${id}/admin`} key={id}>
-            <img className='h-[50px] w-[100px]' src={image.original} alt='' />
+            <img className='h-[50px] w-[100px]' src={image} alt='' />
           </Link>
         </td>
         <td>

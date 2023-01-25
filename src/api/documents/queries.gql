@@ -1,0 +1,11 @@
+query SelectGroupPurchaseListsByEveryone {
+  selectGroupPurchaseListsByEveryone {
+    id
+    name
+    startAt
+    endAt
+    image {
+      original
+    }
+  }
+}

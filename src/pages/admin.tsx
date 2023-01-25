@@ -6,6 +6,60 @@ import ModifyProduct from 'src/components/modify-product';
 import ProductTable from 'src/components/product-table';
 import UserTable from 'src/components/user-table';
 
+// TODO admin => 단일상품조회(모두)
+const SelectGroupPurchaseListByEveryone = gql`
+  query SelectGroupPurchaseListByEveryone($groupPurchaseListId: Int!) {
+    selectGroupPurchaseListByEveryone(groupPurchaseListId: $groupPurchaseListId) {
+      id
+      name
+      description
+      startAt
+      endAt
+    }
+  }
+`;
+
+// TODO admin => 전체회원목록조회(관리자)
+const SelectUsersByAdmin = gql`
+  query SelectUsersByAdmin {
+    selectUsersByAdmin {
+      id
+      loginId
+      password
+      phone
+    }
+  }
+`;
+
+// TODO admin => 전체상품목록조회(모두)
+const SelectGroupPurchaseListsByEveryone = gql`
+  query SelectGroupPurchaseListsByEveryone {
+    selectGroupPurchaseListsByEveryone {
+      id
+      name
+      image {
+        original
+      }
+      isApplied
+      state
+    }
+  }
+`;
+
+// TODO admin => 상품목록삭제(관리자)
+const DeletePurchaseListsByAdmin = gql`
+  mutation DeletePurchaseListsByAdmin($purchaseListId: [Int!]!) {
+    deletePurchaseListsByAdmin(purchaseListIds: $purchaseListId)
+  }
+`;
+
+// TODO admin => 회원비밀번호초기화(관리자)
+const ResetPasswordByAdmin = gql`
+  mutation ResetPasswordByAdmin($userId: Int!) {
+    resetPasswordByAdmin(userId: $userId)
+  }
+`;
+
 const AdminPage = () => {
   const [viewUser, setViewUser] = useState(true);
 
@@ -56,18 +110,7 @@ const AdminPage = () => {
     );
   };
 
-  // TODO admin => 전체회원목록조회(관리자)
-  const SelectUsersByAdmin = gql`
-    query SelectUsersByAdmin {
-      selectUsersByAdmin {
-        id
-        loginId
-        password
-        phone
-      }
-    }
-  `;
-  const { data: userQuery } = useQuery(SelectUsersByAdmin, {
+  const { data: userQuery, refetch } = useQuery(SelectUsersByAdmin, {
     onError: e => console.log(e.message),
   });
   console.log(useQuery(SelectUsersByAdmin, {}));
@@ -75,44 +118,12 @@ const AdminPage = () => {
   const uLists = userQuery ? userQuery.selectUsersByAdmin : [];
   console.log('uLists', uLists);
 
-  // TODO admin => 전체상품목록조회(모두)
-  const SelectGroupPurchaseListsByEveryone = gql`
-    query SelectGroupPurchaseListsByEveryone {
-      selectGroupPurchaseListsByEveryone {
-        id
-        name
-        image {
-          original
-        }
-        isApplied
-        state
-      }
-    }
-  `;
   const { data: purchaseQuery } = useQuery(SelectGroupPurchaseListsByEveryone);
   const pLists = purchaseQuery?.selectGroupPurchaseListsByEveryone;
   console.log(pLists);
 
-  // TODO admin => 회원비밀번호초기화(관리자)
-  const ResetPasswordByAdmin = gql`
-    mutation ResetPasswordByAdmin($userId: Int!) {
-      resetPasswordByAdmin(userId: $userId)
-    }
-  `;
   const [resetPassword] = useMutation(ResetPasswordByAdmin);
 
-  // TODO admin => 단일상품조회(모두)
-  const SelectGroupPurchaseListByEveryone = gql`
-    query SelectGroupPurchaseListByEveryone($groupPurchaseListId: Int!) {
-      selectGroupPurchaseListByEveryone(groupPurchaseListId: $groupPurchaseListId) {
-        id
-        name
-        description
-        startAt
-        endAt
-      }
-    }
-  `;
   const { data: single } = useQuery(SelectGroupPurchaseListByEveryone, {
     variables: { groupPurchaseListId: curRadio },
   });
@@ -120,12 +131,6 @@ const AdminPage = () => {
   console.log('product', product);
   console.log('curRadio', curRadio);
 
-  // TODO admin => 상품목록삭제(관리자)
-  const DeletePurchaseListsByAdmin = gql`
-    mutation DeletePurchaseListsByAdmin($purchaseListId: [Int!]!) {
-      deletePurchaseListsByAdmin(purchaseListIds: $purchaseListId)
-    }
-  `;
   const [deletePurchaseLists] = useMutation(DeletePurchaseListsByAdmin);
 
   const onLogOut = () => {
@@ -138,7 +143,7 @@ const AdminPage = () => {
   };
 
   const onClickCreateProductBtn = () => {
-    if (viewCreateProductForm === false) {
+    if (!viewCreateProductForm) {
       setViewCreateProductForm(true);
       setViewModifyProductForm(false);
     } else {
@@ -148,7 +153,7 @@ const AdminPage = () => {
   };
 
   const onClickModifyProductBtn = () => {
-    if (viewModifyProductForm === false) {
+    if (!viewModifyProductForm) {
       setViewModifyProductForm(true);
       setViewCreateProductForm(false);
     } else {
@@ -235,7 +240,7 @@ const AdminPage = () => {
                     key={v.id}
                     id={v.id}
                     name={v.name}
-                    image={v.image}
+                    image={v.image?.original}
                     // isApplied={v.isApplied}
                     state={v.state}
                     onChangeCurRadio={num => onChangeCurRadio(num)}

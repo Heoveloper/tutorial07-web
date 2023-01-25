@@ -18,6 +18,7 @@ const ProductDetailPage = () => {
         name
         description
         startAt
+        isApplied
         endAt
         image {
           original
@@ -25,8 +26,10 @@ const ProductDetailPage = () => {
       }
     }
   `;
+
   const { data } = useQuery(SelectGroupPurchaseListByEveryone, {
     variables: { groupPurchaseListId },
+    onCompleted: data => setViewApplyBtn(!data.selectGroupPurchaseListByEveryone.isApplied),
   });
   const list = data?.selectGroupPurchaseListByEveryone;
   console.log(list);

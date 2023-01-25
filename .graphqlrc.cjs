@@ -16,7 +16,7 @@ module.exports = {
             scalars: {
               BigInt: 'string',
               FileUri: 'string',
-              DateTime: 'DateISO',
+              DateTime: 'string',
               Upload: 'File',
             },
           },
